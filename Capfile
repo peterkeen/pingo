@@ -21,6 +21,7 @@ set :foreman_export_type, "systemd"
 set :additional_domains, %w(
   po
   po.petekeen.net
+  po.pkn.me
 )
 
 read_env 'prod'
