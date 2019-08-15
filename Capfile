@@ -19,6 +19,7 @@ set :foreman_export_path, "/lib/systemd/system"
 set :foreman_export_type, "systemd"  
 
 set :additional_domains, %w(
+  po
   po.petekeen.net
 )
 
