@@ -1,0 +1,33 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    dotenv (2.7.5)
+    mustermann (1.0.3)
+    nio4r (2.4.0)
+    puma (4.1.0)
+      nio4r (~> 2.0)
+    rack (2.0.7)
+    rack-protection (2.0.5)
+      rack
+    sinatra (2.0.5)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.5)
+      tilt (~> 2.0)
+    thumbtack (1.1.1)
+    tilt (2.0.9)
+    zache (0.5.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  dotenv
+  puma
+  rack
+  sinatra
+  thumbtack
+  zache
+
+BUNDLED WITH
+   1.16.1
