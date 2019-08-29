@@ -11,7 +11,7 @@ class Pingo < Sinatra::Base
   end
 
   def maybe_clear_cache
-    last_updated = @cache.get(:last_updated, lifetime: 30, dirty: true) do
+    last_updated = @cache.get(:last_updated, lifetime: 30) do
       @client.posts.update.to_time
     end
 
