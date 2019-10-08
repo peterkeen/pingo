@@ -11,6 +11,8 @@ class Pingo < Sinatra::Base
   end
 
   def maybe_clear_cache
+    require 'pp'
+    pp @client.posts.update.to_time
     last_updated = @cache.get(:last_updated, lifetime: 30) do
       @client.posts.update.to_time
     end
@@ -36,7 +38,7 @@ class Pingo < Sinatra::Base
     if bookmarks.length > 0
       redirect bookmarks.sort_by { |b| b.time }.last.href, 302
     else
-      redirect "https://www.petekeen.net/#{params[:slug]}"
+      redirect "https://www.petekeen.net/#{params[:slug]}", 302
     end
   end
 end
