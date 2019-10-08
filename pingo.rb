@@ -36,8 +36,7 @@ class Pingo < Sinatra::Base
     if bookmarks.length > 0
       redirect bookmarks.sort_by { |b| b.time }.last.href, 302
     else
-      status 404
-      "not found"
+      redirect "https://www.petekeen.net/#{params[:slug]}"
     end
   end
 end
