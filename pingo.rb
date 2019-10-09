@@ -4,15 +4,18 @@ class Pingo < Sinatra::Base
     @cache = Zache.new
     @client = Thumbtack::Client.new(ENV['PINBOARD_USERNAME'], ENV['PINBOARD_TOKEN'])
     set_last_cleared_time
+    populate_cache
   end
 
   def set_last_cleared_time
     @cache.put(:last_cleared_time, Time.now)
   end
 
-  def maybe_clear_cache
-    require 'pp'
-    pp @client.posts.update.to_time
+  def populate_cache
+    @cache.put(:links, @client.posts.all(tag: 'go'))
+  end
+
+  def maybe_reload_cache
     last_updated = @cache.get(:last_updated, lifetime: 30) do
       @client.posts.update.to_time
     end
@@ -22,6 +25,7 @@ class Pingo < Sinatra::Base
     logger.info "clearing cache"
     @cache.remove_all
     set_last_cleared_time
+    populate_cache
   end
 
   get '/' do
@@ -29,11 +33,9 @@ class Pingo < Sinatra::Base
   end
 
   get '/:slug' do
-    maybe_clear_cache
+    maybe_reload_cache
 
-    bookmarks = @cache.get('link:' + params[:slug]) do
-      @client.posts.get(tag: ['go', 'go:' + params[:slug]])
-    end
+    bookmarks = @cache.get(:links).select { |b| b.tags.include?("go:#{params[:slug]}") }
 
     if bookmarks.length > 0
       redirect bookmarks.sort_by { |b| b.time }.last.href, 302
