@@ -29,7 +29,7 @@ class Pingo < Sinatra::Base
   end
 
   get '/' do
-    "pingo"
+    redirect "https://www.petekeen.net/", 302
   end
 
   get '/:slug' do
