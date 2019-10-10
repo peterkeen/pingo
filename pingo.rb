@@ -28,6 +28,13 @@ class Pingo < Sinatra::Base
     populate_cache
   end
 
+  before do
+    if ENV['RACK_ENV'] == 'production'
+      expires 5*60, :public, :must_revalidate, :proxy_revalidate
+      headers 'Pragma' => 'public'
+    end
+  end    
+
   get '/' do
     redirect "https://www.petekeen.net/", 302
   end
